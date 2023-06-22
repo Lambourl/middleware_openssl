@@ -47,7 +47,4 @@ set_property(TARGET OpenSSL::Crypto PROPERTY IMPORTED_LOCATION ${OPENSSL_INSTALL
 set_property(TARGET OpenSSL::Crypto PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${OPENSSL_INCLUDE_DIR})
 add_dependencies(OpenSSL::Crypto OpenSSL)
 
-file(MAKE_DIRECTORY ./directory_to_cheat)
-install(DIRECTORY ./directory_to_cheat 
-        DESTINATION ${CMAKE_CURRENT_BINARY_DIR} 
-)
+install(DIRECTORY DESTINATION ${OPENSSL_INSTALL_DIR}/dummy_middleware_openssl)
