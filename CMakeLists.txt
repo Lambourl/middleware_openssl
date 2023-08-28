@@ -6,6 +6,7 @@ project(middleware_openssl VERSION "0.0.1")
 
 set(OPENSSL_SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/openssl-src)
 set(OPENSSL_INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
+set(OPENSSLDIR /etc/ssl)
 set(OPENSSL_INCLUDE_DIR ${OPENSSL_INSTALL_DIR}/include)
 set(OPENSSL_CONFIGURE_COMMAND ${OPENSSL_SOURCE_DIR}/config)
 
@@ -35,7 +36,7 @@ ExternalProject_Add(
     ${configure_command}
     ${configure_opts}
     --prefix=${OPENSSL_INSTALL_DIR}
-    --openssldir=${OPENSSL_INSTALL_DIR}
+    --openssldir=${OPENSSLDIR}
   BUILD_COMMAND make -j${Ncore}
   TEST_COMMAND ""
   INSTALL_COMMAND make install
