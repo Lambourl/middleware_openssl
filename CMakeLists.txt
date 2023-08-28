@@ -39,7 +39,7 @@ ExternalProject_Add(
     --openssldir=${OPENSSLDIR}
   BUILD_COMMAND make -j${Ncore}
   TEST_COMMAND ""
-  INSTALL_COMMAND make install
+  INSTALL_COMMAND make install_sw # only install libraries and avoids overwriting openssldir ( reuse the one from the system )
 )
 
 file(MAKE_DIRECTORY ${OPENSSL_INCLUDE_DIR})
