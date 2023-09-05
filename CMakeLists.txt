@@ -6,12 +6,19 @@ project(middleware_openssl VERSION "0.0.1")
 
 set(OPENSSL_SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/openssl-src)
 set(OPENSSL_INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
+set(OPENSSLDIR /etc/ssl)
 set(OPENSSL_INCLUDE_DIR ${OPENSSL_INSTALL_DIR}/include)
 set(OPENSSL_CONFIGURE_COMMAND ${OPENSSL_SOURCE_DIR}/config)
 
+message("Machine is : ${CMAKE_SYSTEM_PROCESSOR} and ${CMAKE_C_FLAGS} ") 
+
 set(configure_command
+    #SDKROOT=${SDKROOT_PATH}
     MACHINE=${CMAKE_SYSTEM_PROCESSOR}
     CC=${CMAKE_C_COMPILER}
+    CXX=${CMAKE_CXX_COMPILER}
+    CFLAGS=--sysroot=${CMAKE_SYSROOT}
+    CXXFLAGS=--sysroot=${CMAKE_SYSROOT}
     ${OPENSSL_CONFIGURE_COMMAND})
 
 set(shared_flag no-shared)
@@ -29,10 +36,10 @@ ExternalProject_Add(
     ${configure_command}
     ${configure_opts}
     --prefix=${OPENSSL_INSTALL_DIR}
-    --openssldir=${OPENSSL_INSTALL_DIR}
+    --openssldir=${OPENSSLDIR}
   BUILD_COMMAND make -j${Ncore}
   TEST_COMMAND ""
-  INSTALL_COMMAND make install
+  INSTALL_COMMAND make install_sw # only install libraries and avoids overwriting openssldir ( reuse the one from the system )
 )
 
 file(MAKE_DIRECTORY ${OPENSSL_INCLUDE_DIR})
